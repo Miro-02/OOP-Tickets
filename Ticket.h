@@ -4,13 +4,19 @@
 class Ticket
 {
 private:
-    char* mName;
-    //Date mDate;
-    char* mPassword;
+    bool mIsBought;
+    bool mIsReserved;
+    char *mPassword;
+    void Free(); 
+
 public:
+    bool isBought() const;
+    bool isReserved() const;
+    const char& getPassword();
+    void setPassword(const char*);
     Ticket();
     Ticket(Ticket &other);
-    Ticket& operator=(const Ticket &other);
+    Ticket &operator=(const Ticket &other);
     ~Ticket();
 };
 

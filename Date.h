@@ -18,6 +18,4 @@ public:
     Date(const unsigned short, const unsigned short, const unsigned short);
 };
 
-
-
 #endif
