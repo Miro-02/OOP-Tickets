@@ -1,6 +1,7 @@
 #include "MyString.h"
 #include <cstring>
-#include <exception>
+#include <iostream>
+#include <fstream>
 
 void MyString::CopyFromOther(const char *other)
 {
@@ -22,9 +23,9 @@ bool MyString::ShouldBeResized(unsigned int other) const
 
 void MyString::Resize()
 {
+    Free();
     char *other = new char[mSize + 1];
     strcpy(other, this->mData);
-    Free();
     SetData(other);
     delete[] other;
 }
@@ -100,8 +101,46 @@ MyString &MyString::operator=(const MyString &other)
     this->SetData(other.mData);
     return *this;
 }
+MyString &MyString::operator=(const char *other)
+{
+    SetData(other);
+    return *this;
+}
 MyString::~MyString()
 {
     Free();
 }
 
+std::ostream &operator<<(std::ostream &stream, const MyString &string)
+{
+    char buff[string.mSize];
+    strncpy(buff, string.mData, string.mSize);
+    stream << buff;
+    return stream;
+}
+
+std::istream &operator>>(std::istream &stream, MyString &string)
+{
+    char buff[1024];
+    stream >> buff;
+    string.mSize = strlen(buff);
+    if (string.ShouldBeResized(string.mSize) || string.mCapacity == 0)
+    {
+        string.CopyFromOther(buff);
+    }
+    else
+    {
+        strcpy(string.mData, buff);
+    }
+    return stream;
+}
+// int main(int argc, char const *argv[])
+// {
+//     char buff[20] = "asfdgsdf";
+//     char buuf2[100] = "fksdjhaouusfhjygkubhjbjybhilubluyvuyb";
+//     MyString string;
+//     string = buff;
+//     string = buuf2;
+//     std::cout << string.GetCapacity() << " " << string.GetSize() << " " << string;
+//     return 0;
+// }
