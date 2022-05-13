@@ -1,5 +1,7 @@
 #ifndef MY_STRING_H
 #define MY_STRING_H
+#include <iostream>
+#include <fstream>
 
 class MyString
 {
@@ -10,17 +12,22 @@ private:
     void Free();
     void CreateEmpty();
     void Resize();
-    void CopyFromOther(const char*);
+    void CopyFromOther(const char *);
     bool ShouldBeResized(unsigned int) const;
+
 public:
     unsigned int GetSize() const;
     unsigned int GetCapacity() const;
+    const char& GetData() const;
     void SetData(const char *);
     MyString();
     MyString(const char *);
     MyString(const MyString &);
     MyString &operator=(const MyString &other);
+    MyString &operator=(const char* other);
     ~MyString();
+    friend std::ostream &operator<<(std::ostream &, const MyString &);
+    friend std::istream &operator>>(std::istream &, MyString &);
 };
 
 #endif
