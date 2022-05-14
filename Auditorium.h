@@ -1,5 +1,6 @@
 #ifndef AUDITORIUM_H
 #define AUDITORIUM_H
+#include "ListTickets.h"
 
 class Auditorium
 {

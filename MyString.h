@@ -18,10 +18,10 @@ private:
 public:
     unsigned int GetSize() const;
     unsigned int GetCapacity() const;
-    const char& GetData() const;
+    const char* GetData() const;
     void SetData(const char *);
     MyString();
-    MyString(const char *);
+MyString(const char *);
     MyString(const MyString &);
     MyString &operator=(const MyString &other);
     MyString &operator=(const char* other);
@@ -29,5 +29,7 @@ public:
     friend std::ostream &operator<<(std::ostream &, const MyString &);
     friend std::istream &operator>>(std::istream &, MyString &);
 };
+
+bool operator==(const MyString& , const MyString& );
 
 #endif

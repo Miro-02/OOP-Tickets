@@ -1,12 +1,16 @@
 #ifndef PRODUCTION_H
 #define PRODUCTION_H
+#include "Date.h"
+#include "Ticket.h"
+#include "MyString.h"
 
 class Production
 {
 private:
-    unsigned int mDate;
-    char* mName;
-    //Auditorium mAuditorium;
+    Date mDate;
+    MyString mName;
+    
+    
 public:
     Production(/* args */);
     ~Production();

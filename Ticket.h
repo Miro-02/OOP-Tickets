@@ -1,23 +1,29 @@
 #ifndef TICKET_H
 #define TICKET_H
+#include "MyString.h"
 
 class Ticket
 {
 private:
     bool mIsBought;
     bool mIsReserved;
-    char *mPassword;
-    void Free(); 
+    MyString mPassword;
+    MyString mDescription;
 
 public:
-    bool isBought() const;
-    bool isReserved() const;
-    const char& getPassword();
-    void setPassword(const char*);
+    bool IsBought() const;
+    bool IsReserved() const;
+    const MyString &GetPassword() const;
+    void SetPassword(const char *);
+    void SetBought();
+    void SetReserved();
+    void SetDescription(const char *);
+    void ReserveTicket(char *, char *);
+    void ReserveTicket(char *);
+    void BuyReservedSeat(char *);
+    void BuyFreeSeat(char *);
+    void BuyFreeSeat(char *, char *);
     Ticket();
-    Ticket(Ticket &other);
-    Ticket &operator=(const Ticket &other);
-    ~Ticket();
 };
 
 #endif
