@@ -1,7 +1,7 @@
 #ifndef PRODUCTION_H
 #define PRODUCTION_H
 #include "Date.h"
-#include "Ticket.h"
+#include "ListTickets.h"
 #include "MyString.h"
 
 class Production
@@ -9,19 +9,11 @@ class Production
 private:
     Date mDate;
     MyString mName;
-    
-    
+    ListTickets mTickets;
 public:
-    Production(/* args */);
-    ~Production();
+    void PrintFreeSeats() const;
+    void PrintReservedSeats() const;
+    unsigned int BoughtTickets() const;
 };
-
-Production::Production(/* args */)
-{
-}
-
-Production::~Production()
-{
-}
 
 #endif

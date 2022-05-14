@@ -104,6 +104,10 @@ Date::Date()
     SetMonth(1);
     SetDay(1);
 }
+bool operator==(const Date& lhs, const Date& rhs)
+{
+    return lhs.GetDay()==rhs.GetDay()&&lhs.GetMonth()==rhs.GetMonth()&&lhs.GetYear()==rhs.GetYear();
+}
 
 // int main(int argc, char const *argv[])
 // {

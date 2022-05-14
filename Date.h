@@ -17,5 +17,6 @@ public:
     Date();
     Date(const unsigned short, const unsigned short, const unsigned short);
 };
+bool operator==(const Date& , const Date& );
 
 #endif

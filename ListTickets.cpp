@@ -2,6 +2,10 @@
 #include <iostream>
 void ListTickets::CopyOther(const ListTickets &other)
 {
+    if(this==&other)
+    {
+        return;
+    }
     for (size_t i = 0; i < other.mSize; i++)
     {
         for (size_t j = 0; j < other.mSize; j++)
@@ -57,6 +61,10 @@ unsigned int ListTickets::GetSize() const
 }
 ListTickets &ListTickets::operator=(const ListTickets &other)
 {
+    if (this==&other)
+    {
+        return *this;
+    }
     Free();
     SetListTickets(other.mSize);
     CopyOther(other);
@@ -82,9 +90,9 @@ void ListTickets::BuyFreeSeat(unsigned int row, unsigned int col, char *password
 {
     mTickets[row][col].BuyFreeSeat(password, description);
 }
-void ListTickets::Print()
+void ListTickets::Print() const
 {
-    unsigned size = GetSize();
+    unsigned int size = GetSize();
     for (size_t i = 0; i < size; i++)
     {
         for (size_t j = 0; j < size; j++)
@@ -101,8 +109,74 @@ void ListTickets::Print()
             {
                 std::cout << "F";
             }
-            std::cout<<" ";
+            std::cout << " ";
         }
-        std::cout<<std::endl;
+        std::cout << std::endl;
     }
+}
+void ListTickets::PrintFreeSeats() const
+{
+    unsigned int size = GetSize();
+    for (size_t i = 0; i < size; i++)
+    {
+        for (size_t j = 0; j < size; j++)
+        {
+            if (mTickets[i][j].IsBought() || mTickets[i][j].IsReserved())
+            {
+                std::cout << "X";
+            }
+            else
+            {
+                std::cout << "✔";
+            }
+            std::cout << " ";
+        }
+        std::cout << std::endl;
+    }
+}
+
+void ListTickets::PrintReservedSeats() const
+{
+    unsigned int size = GetSize();
+    for (size_t i = 0; i < size; i++)
+    {
+        for (size_t j = 0; j < size; j++)
+        {
+            if (mTickets[i][j].IsReserved())
+            {
+                std::cout << "✔";
+            }
+            else
+            {
+                std::cout << "X";
+            }
+            std::cout << " ";
+        }
+        std::cout << std::endl;
+    }
+}
+void ListTickets::UnreserveSeat(unsigned int row, unsigned int col, char *password)
+{
+    if (row < 4 || row > 10 || col < 4 || col > 10)
+    {
+        throw 5;
+    }
+    mTickets[row][col].UnreserveSeat(password);
+}
+
+unsigned int ListTickets::BoughtTickets() const
+{
+    unsigned int size = GetSize();
+    unsigned int count = 0;
+    for (size_t i = 0; i < size; i++)
+    {
+        for (size_t j = 0; j < size; j++)
+        {
+            if (mTickets[i][j].IsBought())
+            {
+                count++;
+            }
+        }
+    }
+    return count;
 }

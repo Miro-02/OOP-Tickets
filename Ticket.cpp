@@ -2,13 +2,14 @@
 #include <cstring>
 #include <iostream>
 
-Ticket::Ticket()
+void Ticket::EmptyTicket()
 {
     mIsBought = false;
     mIsReserved = false;
-    mPassword = "No password";
-    mDescription = "No description";
+    mPassword = "Not set";
+    mDescription = "Not set";
 }
+
 bool Ticket::IsBought() const
 {
     return mIsBought;
@@ -37,45 +38,50 @@ void Ticket::SetDescription(const char * other)
     }
     mDescription = other;
 }
-void Ticket::SetReserved()
+void Ticket::SetReserved(bool value)
 {
-    mIsReserved = true;
+    mIsReserved = value;
 }
-void Ticket::SetBought()
+void Ticket::SetBought(bool value)
 {
-    mIsReserved = true;
+    mIsReserved = value;
 }
 
 void Ticket::ReserveTicket(char *password, char *description)
 {
-    SetReserved();
+    SetReserved(true);
     SetPassword(password);
     SetDescription(description);
 }
 void Ticket::ReserveTicket(char *password)
 {
-    SetReserved();
+    SetReserved(true);
     SetPassword(password);
 }
 void Ticket::BuyReservedSeat(char*password)
 {
     if (mPassword==password)
     {
-        SetBought();
+        SetBought(true);
     }
 }
 void Ticket::BuyFreeSeat(char * password)
 {
     SetPassword(password);
-    SetReserved();
-    SetBought();
+    SetReserved(true);
+    SetBought(true);
 }
 void Ticket::BuyFreeSeat(char * password, char* description)
 {
-    SetPassword(password);
-    SetDescription(description);   
-    SetReserved();
-    SetBought();
+    BuyFreeSeat(password);
+    SetDescription(description);
+}
+void Ticket::UnreserveSeat(char * password)
+{
+    if (mPassword==password)
+    {
+        EmptyTicket();
+    }
 }
 
 // int main(int argc, char const *argv[])

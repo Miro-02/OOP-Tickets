@@ -1,13 +1,11 @@
 #ifndef AUDITORIUM_H
 #define AUDITORIUM_H
-#include "ListTickets.h"
+#include "Production.h"
 
 class Auditorium
 {
 private:
-    unsigned int mID;
-    unsigned int mRowCount;
-    unsigned int mSeats;
+    
 public:
     Auditorium();
     ~Auditorium();
