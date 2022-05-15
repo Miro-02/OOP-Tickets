@@ -15,16 +15,17 @@ public:
     bool IsBought() const;
     bool IsReserved() const;
     const MyString &GetPassword() const;
+    const MyString &GetDescription() const;
     void SetPassword(const char *);
     void SetBought(bool);
     void SetReserved(bool);
     void SetDescription(const char *);
-    void ReserveTicket(char *, char *);
-    void ReserveTicket(char *);
-    void BuyReservedSeat(char *);
-    void BuyFreeSeat(char *);
-    void BuyFreeSeat(char *, char *);
-    void UnreserveSeat(char *);    
+    void ReserveTicket(const char *, const char *);
+    void ReserveTicket(const char *);
+    void BuyReservedSeat(const char *);
+    void BuyFreeSeat(const char *);
+    void BuyFreeSeat(const char *, const char *);
+    void UnreserveSeat(const char *);    
 };
 
 #endif

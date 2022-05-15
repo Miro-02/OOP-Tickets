@@ -108,7 +108,36 @@ bool operator==(const Date& lhs, const Date& rhs)
 {
     return lhs.GetDay()==rhs.GetDay()&&lhs.GetMonth()==rhs.GetMonth()&&lhs.GetYear()==rhs.GetYear();
 }
-
+unsigned int operator>(const Date& lhs, const Date& rhs)
+{
+    if(lhs.GetYear()>rhs.GetYear())
+    {
+        return true;
+    }
+    else if(lhs.GetYear()==rhs.GetYear()&&lhs.GetMonth()>rhs.GetMonth())
+    {
+        return true;
+    }
+    else if(lhs.GetYear()==rhs.GetYear()&&lhs.GetMonth()==rhs.GetMonth()&&lhs.GetDay()>rhs.GetDay())
+    {
+        return true;
+    }
+    return false;
+}
+unsigned int operator<(const Date& lhs, const Date& rhs)
+{
+    if(lhs>rhs)
+    {
+        return false;
+    }
+    return true;
+}
+std::ostream &operator<<(std::ostream &stream, const Date &date)
+{
+    
+    stream << date.GetYear()<<'.'<<date.GetMonth()<<'.'<<date.GetDay();
+    return stream;
+}
 // int main(int argc, char const *argv[])
 // {
 //     Date date = Date(100, 10, 2001);

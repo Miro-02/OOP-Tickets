@@ -22,6 +22,11 @@ const MyString &Ticket::GetPassword() const
 {
     return mPassword;
 }
+const MyString &Ticket::GetDescription() const
+{
+    return mDescription;
+}
+
 void Ticket::SetPassword(const char * other)
 {
     if (strlen(other)<8)
@@ -47,36 +52,36 @@ void Ticket::SetBought(bool value)
     mIsReserved = value;
 }
 
-void Ticket::ReserveTicket(char *password, char *description)
+void Ticket::ReserveTicket(const char *password, const char *description)
 {
     SetReserved(true);
     SetPassword(password);
     SetDescription(description);
 }
-void Ticket::ReserveTicket(char *password)
+void Ticket::ReserveTicket(const char *password)
 {
     SetReserved(true);
     SetPassword(password);
 }
-void Ticket::BuyReservedSeat(char*password)
+void Ticket::BuyReservedSeat(const char*password)
 {
     if (mPassword==password)
     {
         SetBought(true);
     }
 }
-void Ticket::BuyFreeSeat(char * password)
+void Ticket::BuyFreeSeat(const char * password)
 {
     SetPassword(password);
     SetReserved(true);
     SetBought(true);
 }
-void Ticket::BuyFreeSeat(char * password, char* description)
+void Ticket::BuyFreeSeat(const char * password, const char* description)
 {
     BuyFreeSeat(password);
     SetDescription(description);
 }
-void Ticket::UnreserveSeat(char * password)
+void Ticket::UnreserveSeat(const char * password)
 {
     if (mPassword==password)
     {
@@ -84,9 +89,9 @@ void Ticket::UnreserveSeat(char * password)
     }
 }
 
-// int main(int argc, char const *argv[])
-// {
-//     Ticket ticket;
-//     std::cout<<ticket.IsBought()<<" "<<ticket.IsReserved()<<" "<<ticket.GetPassword()<<ticket.GetPassword().GetSize();
-//     return 0;
-// }
+int main(int argc, char const *argv[])
+{
+    Ticket ticket;
+    std::cout<<ticket.IsBought()<<" "<<ticket.IsReserved()<<" "<<ticket.GetPassword()<<ticket.GetPassword().GetSize()<<ticket.GetDescription();
+    return 0;
+}

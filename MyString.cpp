@@ -5,7 +5,6 @@
 
 void MyString::CopyFromOther(const char *other)
 {
-    Free();
     mSize = strlen(other);
     mCapacity = mSize * 2;
     mData = new char[mCapacity];
@@ -14,20 +13,11 @@ void MyString::CopyFromOther(const char *other)
 
 bool MyString::ShouldBeResized(unsigned int other) const
 {
-    if (other < GetCapacity() / 4 || other > (GetCapacity() * 3) / 4)
+    if (other < mCapacity / 4 || other > mCapacity)
     {
         return true;
     }
     return false;
-}
-
-void MyString::Resize()
-{
-    Free();
-    char *other = new char[mSize + 1];
-    strcpy(other, this->mData);
-    SetData(other);
-    delete[] other;
 }
 
 void MyString::CreateEmpty()
@@ -49,7 +39,7 @@ unsigned int MyString::GetCapacity() const
 {
     return mCapacity;
 }
-const char* MyString::GetData() const
+const char *MyString::GetData() const
 {
     return mData;
 }
@@ -66,14 +56,14 @@ void MyString::SetData(const char *data)
         CreateEmpty();
         return;
     }
-    else if (ShouldBeResized(mSize))
+    else if (ShouldBeResized(strlen(data)))
     {
+        Free();
         CopyFromOther(data);
+        return;
     }
-    else
-    {
-        strcpy(mData, data);
-    }
+    strcpy(mData, data);
+    return;
 }
 MyString::MyString()
 {
@@ -81,21 +71,14 @@ MyString::MyString()
 }
 MyString::MyString(const char *data)
 {
-    if (data == nullptr)
-    {
-        CreateEmpty();
-    }
-    else
-    {
-        SetData(data);
-    }
+    SetData(data);
 }
 MyString::MyString(const MyString &other)
 {
-    if (this == &other)
-    {
-        throw 2;
-    }
+    // if (this == &other)
+    // {
+    //     throw 2;
+    // }
     SetData(other.mData);
 }
 MyString &MyString::operator=(const MyString &other)
@@ -151,9 +134,23 @@ std::istream &operator>>(std::istream &stream, MyString &string)
     return stream;
 }
 
-bool operator==(const MyString& lhs, const MyString& rhs)
+bool operator==(const MyString &lhs, const MyString &rhs)
 {
-    return strcmp(lhs.GetData(), rhs.GetData());
+    unsigned int lSize = lhs.GetSize();
+    if(lSize!=rhs.GetSize())
+    {
+        return false;
+    }
+    return strncmp(lhs.GetData(), rhs.GetData(), lSize);
+}
+bool operator==(const MyString &lhs, const char *rhs)
+{
+    unsigned int rSize = strlen(rhs);
+    if(lhs.GetSize()!=rSize)
+    {
+        return false;
+    }
+    return strncmp(lhs.GetData(), rhs, rSize);
 }
 
 // int main(int argc, char const *argv[])

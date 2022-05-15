@@ -17,17 +17,18 @@ public:
     ListTickets &operator=(const ListTickets &other);
     ~ListTickets();
     unsigned int GetSize() const;
-    void ReserveTicket(unsigned int, unsigned int, char *, char *);
-    void ReserveTicket(unsigned int, unsigned int, char *);
-    void BuyReservedSeat(unsigned int, unsigned int, char *);
-    void BuyFreeSeat(unsigned int, unsigned int, char *);
-    void BuyFreeSeat(unsigned int, unsigned int, char *, char *);
-    void Print() const;
-    void PrintFreeSeats() const;
-    void PrintReservedSeats() const;
+    void SetTickets(unsigned int);
+    void ReserveTicket(unsigned int, unsigned int, const char *, const char *);
+    void ReserveTicket(unsigned int, unsigned int, const char *);
+    void BuyReservedSeat(unsigned int, unsigned int, const char *);
+    void BuyFreeSeat(unsigned int, unsigned int, const char *);
+    void BuyFreeSeat(unsigned int, unsigned int, const char *, const char *);
+    // void Print() const;
+    unsigned int PrintFreeSeats() const;
+    unsigned int PrintReservedSeats() const;
+    unsigned int PrintBoughtTickets() const;
     void SetListTickets(unsigned int);
-    void UnreserveSeat(unsigned int, unsigned int, char *);
-    unsigned int BoughtTickets() const;
+    void UnreserveSeat(unsigned int, unsigned int, const char *);
 };
 
 #endif
