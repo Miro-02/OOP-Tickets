@@ -14,10 +14,7 @@ private:
 public:
     unsigned int PrintFreeSeats() const;
     unsigned int PrintReservedSeats() const;
-    // std::ostream& PrintAllReservedSeatsForDate(std::ostream &, const Date&) const;
-    // std::ostream& PrintAllReservedSeatsFor(std::ostream &) const;
     unsigned int PrintBoughtSeats() const;
-    //void PrintBought() const;
     const MyString &GetName() const;
     unsigned int GetSize() const;
     const Date &GetDate() const;

@@ -23,7 +23,6 @@ public:
     void BuyReservedSeat(unsigned int, unsigned int, const char *);
     void BuyFreeSeat(unsigned int, unsigned int, const char *);
     void BuyFreeSeat(unsigned int, unsigned int, const char *, const char *);
-    // void Print() const;
     unsigned int PrintFreeSeats() const;
     unsigned int PrintReservedSeats() const;
     unsigned int PrintBoughtTickets() const;
