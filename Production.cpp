@@ -1,13 +1,79 @@
 #include "Production.h"
 #include <iostream>
 #include <fstream>
+#include <cstring>
+using namespace std;
 
+bool CheckSmallLetter(char ch)
+{
+    if (ch < 'a' || ch > 'z')
+    {
+        return false;
+    }
+    return true;
+}
+bool CheckCapitalLetter(char ch)
+{
+    if (ch < 'A' || ch > 'Z')
+    {
+        return false;
+    }
+    return true;
+}
+Production::Production()
+{
+    mDate = Date();
+    mName = MyString();
+    //mTickets = ListTickets();
+}
+bool Production::CheckProdction(const Date& date, const char* name)
+{
+    if (date==mDate&&strcmp(name, "ALL"))
+    {
+        return true;
+    }
+    else if (date==mDate&&name==mName)
+    {
+        return true;
+    }
+    return false;
+    
+}
+
+Production::Production(unsigned int size)
+{
+    mTickets = ListTickets(size);
+}
+Production::Production(const Date& date, const char* name, unsigned int size)
+{
+    mTickets = ListTickets(size);
+    SetDate(date);
+    SetName(name);
+}
 void Production::SetDate(const Date &date)
 {
     mDate = date;
 }
-void Production::SetName(const MyString &name)
+void Production::SetName(const char *name)
 {
+    if (name == nullptr)
+    {
+        cout << "Bad name." << endl;
+        throw 6;
+    }
+    else if (!CheckCapitalLetter(name[0]))
+    {
+        cout << "Bad name." << endl;
+        throw 6;
+    }
+    for (size_t i = 0; i < strlen(name); i++)
+    {
+        if (!CheckSmallLetter(name[i]))
+        {
+            cout << "Bad name." << endl;
+            throw 6;
+        }
+    }
     mName = name;
 }
 
@@ -20,52 +86,58 @@ const Date &Production::GetDate() const
     return mDate;
 }
 
-void Production::ReserveTicket(unsigned int row, unsigned int col, const char *password, const char *description)
+void Production::ReserveTicket(const Date &date, const char *name, unsigned int row, unsigned int col, const char *password, const char *description = "No description")
 {
-    mTickets.ReserveTicket(row, col, password, description);
+    if (CheckProdction(date, name))
+    {
+        mTickets.ReserveTicket(row, col, password, description);
+        return;
+    }
+    cout << "Bad date." << endl;
 }
-void Production::ReserveTicket(unsigned int row, unsigned int col, const char *password)
-{
-    mTickets.ReserveTicket(row, col, password);
-}
-void Production::BuyReservedSeat(unsigned int row, unsigned int col, const char *password)
-{
-    mTickets.BuyReservedSeat(row, col, password);
-}
-void Production::BuyFreeSeat(unsigned int row, unsigned int col, const char *password)
-{
-    mTickets.BuyFreeSeat(row, col, password);
-}
-void Production::BuyFreeSeat(unsigned int row, unsigned int col, const char *password, const char *description)
-{
-    mTickets.BuyFreeSeat(row, col, password, description);
-}
+
+// void Production::BuyFreeSeat(unsigned int row, unsigned int col, const char *password, const char *description)
+// {
+//     mTickets.BuyFreeSeat(row, col, password, description);
+// }
 // void Production::Print() const
 // {
 //     mTickets.Print();
 // }
 
-void Production::SetListTickets(unsigned int size)
+void Production::BuyTicket(const Date &date, const char *name, unsigned int row, unsigned int col, const char *password, const char *description = "No description")
 {
-    mTickets.SetListTickets(size);
+    if (CheckProdction(date, name))
+    {
+        mTickets.BuyTicket(row, col, password, description);
+        return;
+    }
+    cout << "Bad date." << endl;
 }
-void Production::UnreserveSeat(unsigned int row, unsigned int col, const char *password)
+
+void Production::UnreserveTicket(const Date &date, const char *name, unsigned int row, unsigned int col, const char *password)
 {
-    mTickets.UnreserveSeat(row, col, password);
+    if (CheckProdction(date, name))
+    {
+        mTickets.UnreserveTicket(row, col, password);
+        return;
+    }
+    cout << "Bad date." << endl;
 }
-void Production::SetTickets(unsigned int size)
+
+// void Production::SetListTickets(unsigned int size)
+// {
+//     mTickets.SetListTickets(size);
+// }
+unsigned int Production::PrintFreeTickets() const
 {
-    mTickets.SetTickets(size);
+    return mTickets.PrintFreeTickets();
 }
-unsigned int Production::PrintFreeSeats() const
+unsigned int Production::PrintReservedTickets() const
 {
-    return mTickets.PrintFreeSeats();
+    return mTickets.PrintReservedTickets();
 }
-unsigned int Production::PrintReservedSeats() const
-{
-    return mTickets.PrintReservedSeats();
-}
-unsigned int Production::PrintBoughtSeats() const
+unsigned int Production::PrintBoughtTickets() const
 {
     return mTickets.PrintBoughtTickets();
 }

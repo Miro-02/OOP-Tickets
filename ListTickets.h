@@ -9,6 +9,8 @@ private:
     unsigned int mSize;
     void Free();
     void CopyOther(const ListTickets &other);
+    // void SetTickets(unsigned int);
+    void SetListTickets(unsigned int);
 
 public:
     ListTickets();
@@ -17,17 +19,15 @@ public:
     ListTickets &operator=(const ListTickets &other);
     ~ListTickets();
     unsigned int GetSize() const;
-    void SetTickets(unsigned int);
     void ReserveTicket(unsigned int, unsigned int, const char *, const char *);
-    void ReserveTicket(unsigned int, unsigned int, const char *);
-    void BuyReservedSeat(unsigned int, unsigned int, const char *);
-    void BuyFreeSeat(unsigned int, unsigned int, const char *);
-    void BuyFreeSeat(unsigned int, unsigned int, const char *, const char *);
-    unsigned int PrintFreeSeats() const;
-    unsigned int PrintReservedSeats() const;
+    // void ReserveTicket(unsigned int, unsigned int, const char *);
+    // void BuyReservedSeat(unsigned int, unsigned int, const char *);
+    // void BuyFreeSeat(unsigned int, unsigned int, const char *);
+    void BuyTicket(unsigned int, unsigned int, const char *, const char *);
+    unsigned int PrintFreeTickets() const;
+    unsigned int PrintReservedTickets() const;
     unsigned int PrintBoughtTickets() const;
-    void SetListTickets(unsigned int);
-    void UnreserveSeat(unsigned int, unsigned int, const char *);
+    void UnreserveTicket(unsigned int, unsigned int, const char *);
 };
 
 #endif

@@ -12,6 +12,7 @@ private:
     void EmptyTicket();
 
 public:
+    Ticket();
     bool IsBought() const;
     bool IsReserved() const;
     const MyString &GetPassword() const;
@@ -21,11 +22,11 @@ public:
     void SetReserved(bool);
     void SetDescription(const char *);
     void ReserveTicket(const char *, const char *);
-    void ReserveTicket(const char *);
-    void BuyReservedSeat(const char *);
-    void BuyFreeSeat(const char *);
-    void BuyFreeSeat(const char *, const char *);
-    void UnreserveSeat(const char *);    
+    //void ReserveTicket(const char *);
+    // void BuyReservedSeat(const char *);
+    //void BuyFreeSeat(const char *);
+    void BuyTicket(const char *, const char *);
+    void UnreserveTicket(const char *);    
 };
 
 #endif

@@ -2,28 +2,47 @@
 #include <cstring>
 #include <iostream>
 #include <fstream>
+using namespace std;
 
 void MyString::CopyFromOther(const char *other)
 {
     mSize = strlen(other);
-    mCapacity = mSize * 2;
-    mData = new char[mCapacity];
+    // mCapacity = mSize * 2;
+    mData = new char[mSize + 1];
     strcpy(mData, other);
 }
 
-bool MyString::ShouldBeResized(unsigned int other) const
+// bool MyString::ShouldBeResized(unsigned int other) const
+// {
+//     if (other < mCapacity / 4 || other > mCapacity)
+//     {
+//         return true;
+//     }
+//     return false;
+// }
+MyString::MyString(unsigned int size)
 {
-    if (other < mCapacity / 4 || other > mCapacity)
-    {
-        return true;
-    }
-    return false;
+    mSize = size;
+    // mCapacity = size;
+    mData = new char[mSize];
 }
 
+MyString &MyString::operator+=(const char *other)
+{
+
+    mSize = mSize + strlen(other);
+    char temp[mSize + 1];
+    strcpy(temp, mData);
+    strcat(temp, other);
+    Free();
+    mData = new char[mSize * 2];
+    strcpy(mData, temp);
+    return *this;
+}
 void MyString::CreateEmpty()
 {
     mSize = 0;
-    mCapacity = 0;
+    // mCapacity = 0;
     mData = new char[1];
     mData[0] = '\0';
 }
@@ -35,10 +54,10 @@ unsigned int MyString::GetSize() const
 {
     return mSize;
 }
-unsigned int MyString::GetCapacity() const
-{
-    return mCapacity;
-}
+// unsigned int MyString::GetCapacity() const
+// {
+//     return mCapacity;
+// }
 const char *MyString::GetData() const
 {
     return mData;
@@ -46,24 +65,15 @@ const char *MyString::GetData() const
 
 void MyString::SetData(const char *data)
 {
-    if (mData == data)
-    {
-        return;
-    }
+
     mSize = strlen(data);
-    if (data == nullptr)
-    {
-        CreateEmpty();
-        return;
-    }
-    else if (ShouldBeResized(strlen(data)))
+    if (mSize>0&&data == nullptr)
     {
         Free();
-        CopyFromOther(data);
         return;
     }
+    mData = new char[strlen(data) + 1];
     strcpy(mData, data);
-    return;
 }
 MyString::MyString()
 {
@@ -79,17 +89,13 @@ MyString::MyString(const MyString &other)
     // {
     //     throw 2;
     // }
-    SetData(other.mData);
+    mData = new char[other.mSize+1];
+    strcpy(mData, other.mData);
 }
 MyString &MyString::operator=(const MyString &other)
 {
-    if (this == &other)
+    if (this == &other || other.mData == nullptr)
     {
-        return *this;
-    }
-    else if (this->mData == nullptr)
-    {
-        SetData(other.mData);
         return *this;
     }
     Free();
@@ -118,26 +124,22 @@ std::ostream &operator<<(std::ostream &stream, const MyString &string)
     return stream;
 }
 
-std::istream &operator>>(std::istream &stream, MyString &string)
-{
-    char buff[1024];
-    stream >> buff;
-    string.mSize = strlen(buff);
-    if (string.ShouldBeResized(string.mSize) || string.mCapacity == 0)
-    {
-        string.CopyFromOther(buff);
-    }
-    else
-    {
-        strcpy(string.mData, buff);
-    }
-    return stream;
-}
+// std::istream &operator>>(std::istream &stream, MyString &string)
+// {
+//     char buff[1024];
+//     stream >> buff;
+//     string.mSize = strlen(buff);
+//     Free();
+//     CopyFromOther()
+//     strcpy(string.mData, buff);
+
+//     return stream;
+// }
 
 bool operator==(const MyString &lhs, const MyString &rhs)
 {
     unsigned int lSize = lhs.GetSize();
-    if(lSize!=rhs.GetSize())
+    if (lSize != rhs.GetSize())
     {
         return false;
     }
@@ -146,21 +148,31 @@ bool operator==(const MyString &lhs, const MyString &rhs)
 bool operator==(const MyString &lhs, const char *rhs)
 {
     unsigned int rSize = strlen(rhs);
-    if(lhs.GetSize()!=rSize)
+    if (lhs.GetSize() != rSize)
     {
         return false;
     }
     return strncmp(lhs.GetData(), rhs, rSize);
 }
 
+char MyString::operator[](unsigned int index)
+{
+    if (index > mSize)
+    {
+        cout << "Invalid index" << endl;
+        throw 0;
+    }
+    return mData[index];
+}
+
 // int main(int argc, char const *argv[])
 // {
 //     char buff[20] = "asfdgsdf";
 //     char buuf2[100] = "fksdjhaouusfhjygkubhjbjybhilubluyvuyb";
-//     MyString string = nullptr;
+//     MyString string = "dfhpikjnu";
 //     char buf[20];
 //     // string = buff;
-//     // string = buuf2;
-//     std::cout << string.GetCapacity() << " " << string.GetSize() << " " << string<<" "<<buf;
+//     //  string = buuf2;
+//     //std::cout << string[5];
 //     return 0;
 // }

@@ -19,6 +19,7 @@ public:
     Date();
     Date(const unsigned short, const unsigned short, const unsigned short);
     friend std::ostream &operator<<(std::ostream &, const Date &);
+    Date& operator=(const char*);
 };
 bool operator==(const Date &, const Date &);
 unsigned int operator>(const Date &, const Date &);

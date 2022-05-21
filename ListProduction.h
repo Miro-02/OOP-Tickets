@@ -10,11 +10,9 @@ private:
     unsigned int mCapacity;
     void Free();
     void CreateEmpty();
-    void Resize();
     void CopyFromOther(const ListProduction &);
-    void CopyFromOtherWithoutResize(const ListProduction &);
+    bool ShouldBeResized(unsigned int size) const;
     void ResizeUp();
-    bool ShouldBeResized(unsigned int) const;
 
 public:
     ListProduction();
@@ -23,24 +21,15 @@ public:
     ~ListProduction();
     ListProduction &operator=(const ListProduction &);
     unsigned int GetSize() const;
-    unsigned int GetCapacity() const;
     const Production &GetData() const;
-    void SetListTickets(unsigned int);
-    void ReserveTicket(const Date &, const char *, unsigned int, unsigned int, const char *, const char *);
-    void ReserveTicket(const Date &, const char *, unsigned int, unsigned int, const char *);
-    void BuyReservedSeat(const Date &, const char *, unsigned int, unsigned int, const char *);
-    void BuyFreeSeat(const Date &, const char *, unsigned int, unsigned int, const char *);
-    void BuyFreeSeat(const Date &, const char *, unsigned int, unsigned int, const char *, const char *);
-    // void Print(const Date &, const char *) const;
 
-    void UnreserveSeat(const Date &, const char *, unsigned int, unsigned int, const char *);
+    void ReserveTicket(const Date &, const char *, unsigned int, unsigned int, const char *, const char *);
+    void BuyTicket(const Date &, const char *, unsigned int, unsigned int, const char *, const char *);
+    void UnreserveTicket(const Date &, const char *, unsigned int, unsigned int, const char *);
     void AddProduction(const Date &, const char *, unsigned int);
-    void PrintFreeSeats(const Date &, const char *) const;
-    std::ostream & PrintReservedSeats(std::ostream &stream, const Date &, const char *) const;
-    std::ostream & PrintReservedSeatsForDate(std::ostream &stream, const Date &) const;
-    std::ostream & PrintAllReservedSeats(std::ostream &stream) const;
-    void PrintBoughtSeats(const Date &, const Date &) const;
-    void PrintAllBoughtSeats() const;
+    void PrintFreeTickets(const Date &, const char *) const;
+    std::ostream &PrintReservedTickets(std::ostream &stream, const Date &, bool, const char *) const;
+    void PrintBoughtTickets(const Date &, const Date &, bool) const;
 };
 
 #endif

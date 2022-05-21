@@ -1,6 +1,7 @@
 #include "Ticket.h"
 #include <cstring>
 #include <iostream>
+using namespace std;
 
 void Ticket::EmptyTicket()
 {
@@ -27,17 +28,17 @@ const MyString &Ticket::GetDescription() const
     return mDescription;
 }
 
-void Ticket::SetPassword(const char * other)
+void Ticket::SetPassword(const char *other)
 {
-    if (strlen(other)<8)
+    if (strlen(other) < 8)
     {
         throw 3;
     }
     mPassword = other;
 }
-void Ticket::SetDescription(const char * other)
+void Ticket::SetDescription(const char *other)
 {
-    if(other==nullptr)
+    if (other == nullptr)
     {
         return;
     }
@@ -52,46 +53,108 @@ void Ticket::SetBought(bool value)
     mIsReserved = value;
 }
 
-void Ticket::ReserveTicket(const char *password, const char *description)
+void Ticket::ReserveTicket(const char *password, const char *description = "No description")
 {
+    if (IsReserved() || IsBought())
+    {
+        cout << "Ticket is already reserved";
+        return;
+    }
     SetReserved(true);
     SetPassword(password);
     SetDescription(description);
+    cout << "Ticket is reserved." << endl;
 }
-void Ticket::ReserveTicket(const char *password)
+Ticket::Ticket()
 {
-    SetReserved(true);
-    SetPassword(password);
+    mIsBought = false;
+    mIsReserved = false;
+    mPassword = MyString();
+    mDescription = MyString();
 }
-void Ticket::BuyReservedSeat(const char*password)
+// void Ticket::ReserveTicket(const char *password)
+// {
+//     if(IsReserved()||IsBought())
+//     {
+//         cout<<"Ticket is reserved";
+//         return;
+//     }
+//     SetReserved(true);
+//     SetPassword(password);
+// }
+// void Ticket::BuyReservedSeat(const char *password)
+// {
+//     if (IsBought())
+//     {
+//         cout << "Ticket is already reserved." << endl;
+//         return;
+//     }
+//     else if (mPassword == password)
+//     {
+//         SetBought(true);
+//         cout << "Ticket is bought." << endl;
+//     }
+//     return;
+// }
+// void Ticket::BuyFreeSeat(const char * password)
+// {
+//     if(IsBought()||IsReserved())
+//     {
+//         cout<<"Ticket is reserved."<<endl;
+//         return;
+//     }
+//     SetPassword(password);
+//     SetReserved(true);
+//     SetBought(true);
+// }
+void Ticket::BuyTicket(const char *password, const char *description = "No description")
 {
-    if (mPassword==password)
+    if (IsBought())
     {
-        SetBought(true);
+        cout << "Ticket is already reserved." << endl;
+        return;
     }
-}
-void Ticket::BuyFreeSeat(const char * password)
-{
+    else if (IsReserved())
+    {
+        if (mPassword == password)
+        {
+            if (!strcmp(description, "No description"))
+            {
+                SetDescription(description);
+            }
+            SetBought(true);
+            cout << "Ticket is bought." << endl;
+            return;
+        }
+        cout << "Wrong password." << endl;
+        return;
+    }
     SetPassword(password);
     SetReserved(true);
     SetBought(true);
-}
-void Ticket::BuyFreeSeat(const char * password, const char* description)
-{
-    BuyFreeSeat(password);
     SetDescription(description);
-}
-void Ticket::UnreserveSeat(const char * password)
-{
-    if (mPassword==password)
-    {
-        EmptyTicket();
-    }
+    cout << "Ticket is bought." << endl;
 }
 
-int main(int argc, char const *argv[])
+void Ticket::UnreserveTicket(const char *password)
 {
-    Ticket ticket;
-    std::cout<<ticket.IsBought()<<" "<<ticket.IsReserved()<<" "<<ticket.GetPassword()<<ticket.GetPassword().GetSize()<<ticket.GetDescription();
-    return 0;
+    if (!IsBought() || !IsReserved())
+    {
+        cout << "Bad position." << endl;
+        return;
+    }
+    else if (mPassword == password)
+    {
+        cout << "Ticket is unreserved" << endl;
+        EmptyTicket();
+        return;
+    }
+    cout << "Wrong password." << endl;
 }
+
+// int main(int argc, char const *argv[])
+// {
+//     Ticket ticket;
+//     std::cout << ticket.IsBought() << " " << ticket.IsReserved() << " " << ticket.GetPassword() << ticket.GetPassword().GetSize() << ticket.GetDescription();
+//     return 0;
+// }
