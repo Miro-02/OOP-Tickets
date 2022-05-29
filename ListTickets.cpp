@@ -43,7 +43,7 @@ void ListTickets::Free()
 
 ListTickets::ListTickets()
 {
-    mSize = 5;
+    mSize = 4;
     mTickets = new Ticket*[4];
     for (size_t i = 0; i < 4; i++)
     {
@@ -81,6 +81,11 @@ ListTickets &ListTickets::operator=(const ListTickets &other)
 }
 void ListTickets::ReserveTicket(unsigned int row, unsigned int col, const char *password, const char *description = "No description")
 {
+    if(row>mSize||col>mSize)
+    {
+        cout<<"Bad spot."<<endl;
+        return;
+    }
     mTickets[row][col].ReserveTicket(password, description);
 }
 void ListTickets::BuyTicket(unsigned int row, unsigned int col, const char *password, const char *description = "No description")

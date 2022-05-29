@@ -56,7 +56,7 @@ void Production::SetDate(const Date &date)
 }
 void Production::SetName(const char *name)
 {
-    if (name == nullptr)
+    /*if (name == nullptr)
     {
         cout << "Bad name." << endl;
         throw 6;
@@ -66,14 +66,14 @@ void Production::SetName(const char *name)
         cout << "Bad name." << endl;
         throw 6;
     }
-    for (size_t i = 0; i < strlen(name); i++)
+    for (size_t i = 1; i < strlen(name); i++)
     {
         if (!CheckSmallLetter(name[i]))
         {
             cout << "Bad name." << endl;
             throw 6;
         }
-    }
+    }*/
     mName = name;
 }
 
@@ -93,6 +93,7 @@ void Production::ReserveTicket(const Date &date, const char *name, unsigned int 
         mTickets.ReserveTicket(row, col, password, description);
         return;
     }
+    else
     cout << "Bad date." << endl;
 }
 

@@ -19,11 +19,12 @@ Auditorium::Auditorium()
 {
     mID = 0;
     mSize = 4;
-    mProductions = ListProduction(4);
+    //mProductions = ListProduction();
 }
 
 void Auditorium::ReserveTicket(const Date &date, const char *name, unsigned int row, unsigned int col, const char *password, const char *description = "No description")
 {
+    std::cout<<5;
     mProductions.ReserveTicket(date, name, row, col, password, description);
 }
 
@@ -54,4 +55,5 @@ void Auditorium::UnreserveTicket(const Date &date, const char *name, unsigned in
 void Auditorium::AddProduction(const Date &date, const char *name)
 {
     mProductions.AddProduction(date, name, mSize);
+    mSize++;
 }

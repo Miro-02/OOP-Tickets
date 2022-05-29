@@ -63,7 +63,7 @@ void Ticket::ReserveTicket(const char *password, const char *description = "No d
     SetReserved(true);
     SetPassword(password);
     SetDescription(description);
-    cout << "Ticket is reserved." << endl;
+    cout << "You reserved." << endl;
 }
 Ticket::Ticket()
 {
@@ -123,7 +123,7 @@ void Ticket::BuyTicket(const char *password, const char *description = "No descr
                 SetDescription(description);
             }
             SetBought(true);
-            cout << "Ticket is bought." << endl;
+            cout << "You bought." << endl;
             return;
         }
         cout << "Wrong password." << endl;
@@ -133,12 +133,12 @@ void Ticket::BuyTicket(const char *password, const char *description = "No descr
     SetReserved(true);
     SetBought(true);
     SetDescription(description);
-    cout << "Ticket is bought." << endl;
+    cout << "You bought." << endl;
 }
 
 void Ticket::UnreserveTicket(const char *password)
 {
-    if (!IsBought() || !IsReserved())
+    if (!IsReserved())
     {
         cout << "Bad position." << endl;
         return;

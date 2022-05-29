@@ -23,7 +23,7 @@ bool isYearLeap(const unsigned short year)
 }
 Date &Date::operator=(const char *date)
 {
-    cout<<date;
+    //cout<<date;
     char day[3], month[3], year[4];
     day[0] = date[0];
     day[1] = date[1];

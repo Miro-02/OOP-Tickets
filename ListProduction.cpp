@@ -55,7 +55,7 @@ void ListProduction::CopyFromOther(const ListProduction &other)
 
 ListProduction::ListProduction()
 {
-    mSize = 2;
+    mSize = 0;
     mCapacity = 4;
     mProductions = new Production[4];
 }
@@ -99,7 +99,7 @@ void ListProduction::BuyTicket(const Date &date, const char *name, unsigned int 
 {
     for (size_t i = 0; i < mSize; i++)
     {
-        mProductions[i].ReserveTicket(date, name, row, col, password, description);
+        mProductions[i].BuyTicket(date, name, row, col, password, description);
     }
 }
 
@@ -173,6 +173,7 @@ void ListProduction::AddProduction(const Date &date, const char *name, unsigned 
     {
         if (mProductions[i].GetDate() == date)
         {
+            std::cout<<"This date already exists"<<std::endl;
             throw 9;
         }
     }
